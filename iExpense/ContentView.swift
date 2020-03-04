@@ -8,20 +8,30 @@
 
 import SwiftUI
  
- class User: ObservableObject {
-    @Published var firstName  = "Bill"
-    @Published var lastName = "Williams"
- }
 
-struct ContentView: View {
-    @ObservedObject private var user = User()
+ struct SecondView: View {
+    @Environment(\.presentationMode) var presentationMode
+    var name: String
     var body: some View {
-        VStack (alignment: .leading, spacing: 20){
-            Text("Your Name is \(user.firstName) \(user.lastName)").font(.headline)
-            TextField("First Name", text: $user.firstName)
-            TextField("Seccond Name", text: $user.lastName)
+        VStack {
+            Text("Hello \(name)!")
+            Button("Dismiss") {
+                self.presentationMode.wrappedValue.dismiss()
+            }
         }
-    .padding()
+        
+    }
+ }
+struct ContentView: View {
+    @State private var showingSheet = false
+    
+    var body: some View {
+        Button("Show Sheet") {
+            self.showingSheet.toggle()
+        }
+        .sheet(isPresented: $showingSheet) {
+            SecondView(name: "Weru")
+        }
     }
 }
 
