@@ -1,4 +1,4 @@
-//
+ //
 //  ContentView.swift
 //  iExpense
 //
@@ -7,10 +7,21 @@
 //
 
 import SwiftUI
+ 
+ class User: ObservableObject {
+    @Published var firstName  = "Bill"
+    @Published var lastName = "Williams"
+ }
 
 struct ContentView: View {
+    @ObservedObject private var user = User()
     var body: some View {
-        Text("Hello, World!")
+        VStack (alignment: .leading, spacing: 20){
+            Text("Your Name is \(user.firstName) \(user.lastName)").font(.headline)
+            TextField("First Name", text: $user.firstName)
+            TextField("Seccond Name", text: $user.lastName)
+        }
+    .padding()
     }
 }
 
